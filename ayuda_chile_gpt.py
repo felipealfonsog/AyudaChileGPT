@@ -16,6 +16,8 @@ from langchain.chat_models import ChatOpenAI
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from helper_utils import capture_and_display_output
 from dotenv import load_dotenv
+from streamlit_embedcode import components
+from urllib.parse import quote
 load_dotenv()
 
 # set API Key
