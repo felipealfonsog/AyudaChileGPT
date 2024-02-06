@@ -15,7 +15,7 @@
 AyudaChileGPT 
 ====================
 Proyecto Open Source
-- Developers :
+- Engineers / Developers :
 Daniel Avila : https://github.com/davila7
 Felipe A. González : https://github.com/felipealfonsog
 
@@ -240,8 +240,9 @@ def page2():
     st.write(df)
     
     '''
-# Termine realizando yo una implementacion diferente para desplegar un mapa de google maps con los centros de ayuda
+# Terminé realizando yo una implementacion diferente para desplegar un mapa de google maps con los centros de ayuda
 # funciona ok. pondre un sshot. 
+# I ended up doing an implementation by myself. it's working fine by now. By @felipealfonsog
 
 
 def page2():
