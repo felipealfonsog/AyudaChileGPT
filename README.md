@@ -24,7 +24,7 @@ Agente IA Open-Source para atender consultas sobre la emergencia en Chile 🚨 �
 | ![Logo](/assets/logo_v2_square.jpg) | <h6>Agente IA con información verificada sobre la emergencia en Chile, [¿Cómo ayudar?](#c%C3%B3mo-ayudar-)<br><br> - Mejora en el código fuente, el proyecto es Open Source. <br> - Agrega y/o verifica información en el GDrive de archivos. <br> - Comparte el agente! </h6> |
 | :--- | :--- |
 
-[![Twitter](https://img.shields.io/badge/Compartir%20en-Twitter-blue?logo=x&style=plastic)](https://twitter.com/intent/tweet?url=http://ayudachilegpt.cl/&text=AyudaChileGPT%20en%20Twitter&&hashtags=chile,ayudachilegpt,chileayuda,emergencia)
+[![Twitter](https://img.shields.io/badge/Compartir%20en-X%20(Twitter)-blue?logo=x&style=plastic)](https://twitter.com/intent/tweet?url=http://ayudachilegpt.cl/&text=AyudaChileGPT%20en%20Twitter&&hashtags=chile,ayudachilegpt,chileayuda,emergencia)
 [![Facebook](https://img.shields.io/badge/Compartir%20en-Facebook-blue?logo=facebook&style=plastic)](https://www.facebook.com/sharer/sharer.php?u=http://ayudachilegpt.cl/)
 [![LinkedIn](https://img.shields.io/badge/Compartir%20en-LinkedIn-blue?logo=linkedin&style=plastic)](https://www.linkedin.com/shareArticle?url=http://ayudachilegpt.cl/&title=AyudaChileGPT%20en%20LinkedIn&summary=AyudaChileGPT%20en%20LinkedIn)
 
