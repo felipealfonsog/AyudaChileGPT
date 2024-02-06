@@ -24,7 +24,7 @@ Agente IA Open-Source para atender consultas sobre la emergencia en Chile ğŸš¨ ğ
 | :--- | :--- |
 
 
-<!-->
+<!--
 
 ![Logo](/assets/logo_v2_square.jpg)
 
