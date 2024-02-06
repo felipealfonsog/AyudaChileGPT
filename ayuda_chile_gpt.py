@@ -16,8 +16,8 @@ from langchain.chat_models import ChatOpenAI
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from helper_utils import capture_and_display_output
 from dotenv import load_dotenv
-from streamlit_embedcode import components
 from urllib.parse import quote
+
 load_dotenv()
 
 # set API Key
@@ -137,7 +137,9 @@ def page1():
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 def page2():
-    '''
+    
+    ''' 
+    
     st.header("Centros de ayuda verificados")
 
     # Cargar el archivo csv
@@ -148,55 +150,50 @@ def page2():
     # Cargar los datos
     df = load_data()
 
-    # Input de texto 
+    # Input de texto
     filtro = st.text_input('Filtrar información')
 
-    # Filtrar el dataframe 
-    df = df[df.apply(lambda row: row.astype(str).str.lower().str.contains(filtro.lower()), axis = 1).any(axis = 1)]
+    # Filtrar el dataframe
+    df = df[df.apply(lambda row: row.astype(str).str.lower(
+    ).str.contains(filtro.lower()), axis=1).any(axis=1)]
 
     # Mostrar el dataframe
     st.write(df)
+    
     '''
+# Termine realizando yo una implementacion diferente para desplegar un mapa de google maps con los centros de ayuda
+# funciona ok. pondre un sshot. 
 
-    # hice una corrección para hacerla más responsive. En realidad, es una propuesta realizada por @davidlealo.
-    # Chequee su PR anteriormente, aunque aún no está en el repositorio principal.
-    # Se eliminó la dependencia 'streamlit_embedcode' para el iframe y y ahora se utilizó directamente la función 'st.markdown' para incrustar el iframe del mapa de Google Maps.
-    # Se ajustó el ancho del iframe al 100% para que se ajuste al tamaño de la ventana del navegador. Esto debería hacer que la página sea más responsive.
-
+def page2():
     st.header("Centros de ayuda verificados")
 
     # Cargar el archivo csv
     @st.cache_data
     def load_data():
-        return pd.read_csv('assets/centros_verificados_v5_urls.csv')
+        return pd.read_csv('assets/centros_verificados_v4.csv')
 
     # Cargar los datos
     df = load_data()
 
-    # Input de texto 
+    # Input de texto
     filtro = st.text_input('Filtrar información')
 
-    # Filtrar el dataframe 
-    df_filtered = df[df.apply(lambda row: row.astype(str).str.lower().str.contains(filtro.lower()), axis=1).any(axis=1)]
+    # Filtrar el dataframe
+    df = df[df.apply(lambda row: row.astype(str).str.lower(
+    ).str.contains(filtro.lower()), axis=1).any(axis=1)]
 
     # Mostrar el dataframe
-    if not df_filtered.empty:
-        # Crear una nueva columna con enlaces HTML
-        df_filtered['Mapa enlace'] = df_filtered['Mapa'].apply(lambda x: f'<a target="_blank" href="{x}">{x}</a>')
-        # Drop y rename columna Mapa
-        df_filtered = df_filtered.drop(columns=['Mapa']).rename(columns={'Mapa enlace': 'Mapa'})
+    st.write(df)
 
-        # Mostrar el DataFrame con enlaces 
-        st.write(df_filtered.to_html(escape=False), unsafe_allow_html=True)
+    # Mostrar los centros de ayuda en un mapa de Google Maps
+    if not df.empty:
+        # URL del mapa de Google Maps
+        mapa_url = "https://www.google.com/maps/d/embed?mid=13KKV0Sy81G2L0Vz5lS9E90YysNi71BQ&ehbc=2E312F&noprof=1"
+        
+        # Mostrar el mapa en un iframe de manera responsive
+        st.markdown(f'<iframe src="{mapa_url}" width="100%" height="500" frameborder="0" allowfullscreen></iframe>', unsafe_allow_html=True)
     else:
-        st.write("No se encontraron resultados para el filtro aplicado.")
-
-    st.write("")
-
-    # Incrustar el mapa de Google Maps
-    map_url = "https://www.google.com/maps/d/embed?mid=13KKV0Sy81G2L0Vz5lS9E90YysNi71BQ&ehbc=2E312F&noprof=1"
-    map_url_encoded = quote(map_url, safe=':/')
-    st.markdown(f'<iframe src={map_url_encoded} width="100%" height="480" style="border:0;"></iframe>', unsafe_allow_html=True)
+        st.warning("No se encontraron centros de ayuda verificados.")
 
 
 
