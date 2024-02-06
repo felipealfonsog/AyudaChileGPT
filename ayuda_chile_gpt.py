@@ -250,7 +250,6 @@ def page2():
 
 
 
-def page2():
     
     ''' 
     
