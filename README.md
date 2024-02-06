@@ -3,7 +3,7 @@ Agente IA Open-Source para atender consultas sobre la emergencia en Chile ðŸš¨ ð
 
 [![AyudaChileGPT Badge](https://custom-icon-badges.demolab.com/badge/AyudaChileGPT-blue.svg?logo=ayudachilegpt4&logoColor=white&style=plastic)](#)
 
-<sub>
+
   
 - Website Oficial: [ayudachilegpt.cl](http://ayudachilegpt.cl/)
 
@@ -13,7 +13,7 @@ Agente IA Open-Source para atender consultas sobre la emergencia en Chile ðŸš¨ ð
 
 - Donaciones a FundaciÃ³n [Un Techo para Chile](https://cl.techo.org/)
 
-</sub>
+
 <br>
 
 <!--
