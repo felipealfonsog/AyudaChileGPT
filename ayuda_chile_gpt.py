@@ -1,3 +1,28 @@
+'''
+
+
+┏━━━┓╋╋╋╋╋╋╋╋┏┓╋╋┏━━━┳┓╋╋┏┓╋╋╋┏━━━┳━━━┳━━━━┓
+┃┏━┓┃╋╋╋╋╋╋╋╋┃┃╋╋┃┏━┓┃┃╋╋┃┃╋╋╋┃┏━┓┃┏━┓┃┏┓┏┓┃
+┃┃╋┃┣┓╋┏┳┓┏┳━┛┣━━┫┃╋┗┫┗━┳┫┃┏━━┫┃╋┗┫┗━┛┣┛┃┃┗┛
+┃┗━┛┃┃╋┃┃┃┃┃┏┓┃┏┓┃┃╋┏┫┏┓┣┫┃┃┃━┫┃┏━┫┏━━┛╋┃┃
+┃┏━┓┃┗━┛┃┗┛┃┗┛┃┏┓┃┗━┛┃┃┃┃┃┗┫┃━┫┗┻━┃┃╋╋╋╋┃┃
+┗┛╋┗┻━┓┏┻━━┻━━┻┛┗┻━━━┻┛┗┻┻━┻━━┻━━━┻┛╋╋╋╋┗┛
+╋╋╋╋┏━┛┃
+╋╋╋╋┗━━┛
+
+
+------------
+AyudaChileGPT 
+====================
+Proyecto Open Source
+- Developers :
+Daniel Avila : https://github.com/davila7
+Felipe A. González : https://github.com/felipealfonsog
+
+
+
+'''
+
 import streamlit as st
 import time
 import os
@@ -94,47 +119,101 @@ with col2:
 st.write("Proyecto open-source: "+ "https://github.com/davila7/AyudaChileGPT")
 st.markdown('---')
 
+
+
 def page1():
+    # st.header("Consulta a AyudaChileGPT")
+    
+    # # Inicializar el historial del chat si no existe
+    # if "messages" not in st.session_state:
+    #     st.session_state.messages = []
+
+    # # Mostrar mensajes del historial en cada ejecución de la aplicación
+    # for message in st.session_state.messages:
+    #     with st.chat_message(message["role"]):
+    #         st.markdown(message["content"])
+
+    # # Aceptar la entrada del usuario
+    # if prompt := st.chat_input("Consulta sobre la emergencia"):
+    #     # rl = RouteLayer(encoder=encoder, routes=routes)
+    #     # route = rl(prompt).name
+
+    #     # Add user message to chat history
+    #     st.session_state.messages.append({"role": "user", "content": prompt})
+    #     # Display user message in chat message container
+    #     with st.chat_message("user"):
+    #         st.markdown(prompt)
+
+    #     # Display assistant response in chat message container
+    #     with st.chat_message("assistant"):
+    #         with st.spinner('Cargando respuesta...'):
+    #             message_placeholder = st.empty()
+    #             full_response = ""
+    #             messages = st.session_state.messages
+                
+    #             completion = Completion(codegpt_api_key)
+    #             response_completion = completion.create(codegpt_acopio_agent_id, messages, stream=False)
+                
+    #             for response in response_completion:
+    #                 time.sleep(0.05)
+    #                 full_response += (response or "")
+    #                 message_placeholder.markdown(full_response + "▌")       
+    #             message_placeholder.markdown(full_response)
+    #     st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+
+    # Algunos arreglos en el codigo
+
+
+
     st.header("Consulta a AyudaChileGPT")
 
-    
-    # Initialize chat history
+    # Inicializar el historial del chat si no existe
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
-    # Display chat messages from history on app rerun
+    # Mostrar mensajes del historial en cada ejecución de la aplicación
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
+    # Aceptar la entrada del usuario
+    prompt = st.text_input("Consulta sobre la emergencia")
 
-    # Accept user input
-    if prompt := st.chat_input("Consulta sobre la emergencia"):
-        # rl = RouteLayer(encoder=encoder, routes=routes)
-        # route = rl(prompt).name
-
-        # Add user message to chat history
+    if prompt:
+        # Agregar el mensaje del usuario al historial del chat
         st.session_state.messages.append({"role": "user", "content": prompt})
-        # Display user message in chat message container
-        with st.chat_message("user"):
-            st.markdown(prompt)
 
-        # Display assistant response in chat message container
+        # Mostrar la respuesta del asistente en el contenedor del chat
         with st.chat_message("assistant"):
             with st.spinner('Cargando respuesta...'):
                 message_placeholder = st.empty()
                 full_response = ""
                 messages = st.session_state.messages
-                
+                    
+                # Crear una instancia de Completion y obtener la respuesta
                 completion = Completion(codegpt_api_key)
                 response_completion = completion.create(codegpt_acopio_agent_id, messages, stream=False)
-                
-                for response in response_completion:
-                    time.sleep(0.05)
-                    full_response += (response or "")
-                    message_placeholder.markdown(full_response + "▌")       
-                message_placeholder.markdown(full_response)
+                    
+                # Verificar si se recibió alguna respuesta
+                if response_completion is not None:
+                    for response in response_completion:
+                        time.sleep(0.05)
+                        full_response += (response or "")
+                        message_placeholder.markdown(full_response + "▌")
+                else:
+                    full_response = "Lo siento, no se encontró ninguna respuesta."
+                    message_placeholder.markdown(full_response)
+        
+        # Agregar la respuesta del asistente al historial del chat
         st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+        # Mostrar el mensaje del usuario en el contenedor del chat
+        with st.chat_message("user"):
+            st.markdown(prompt)
+
+
+
 
 def page2():
     
@@ -163,6 +242,7 @@ def page2():
     '''
 # Termine realizando yo una implementacion diferente para desplegar un mapa de google maps con los centros de ayuda
 # funciona ok. pondre un sshot. 
+
 
 def page2():
     st.header("Centros de ayuda verificados")
@@ -280,7 +360,6 @@ def page3():
 def page4():
 
     # Propuesta para cargar datos de un excell y que sean extraidos datos de personas desapareciddas. 
-    # Contribs By Computer Science Engineer : Felipe Alfonso Gonzalez - github.com/felipealfonsog 
     # 
     st.title("Lista de personas desaparecidas")
 
