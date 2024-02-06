@@ -182,11 +182,13 @@ def page1():
             st.markdown(message["content"])
 
     # Aceptar la entrada del usuario
-    prompt = st.text_input("Consulta sobre la emergencia")
-
-    if prompt:
+    if prompt := st.chat_input("Consulta sobre la emergencia"):
         # Agregar el mensaje del usuario al historial del chat
         st.session_state.messages.append({"role": "user", "content": prompt})
+
+        # Mostrar el mensaje del usuario en el contenedor del chat
+        with st.chat_message("user"):
+            st.markdown(prompt)
 
         # Mostrar la respuesta del asistente en el contenedor del chat
         with st.chat_message("assistant"):
@@ -194,28 +196,19 @@ def page1():
                 message_placeholder = st.empty()
                 full_response = ""
                 messages = st.session_state.messages
-                    
-                # Crear una instancia de Completion y obtener la respuesta
+                
                 completion = Completion(codegpt_api_key)
                 response_completion = completion.create(codegpt_acopio_agent_id, messages, stream=False)
-                    
-                # Verificar si se recibió alguna respuesta
+                
                 if response_completion is not None:
                     for response in response_completion:
                         time.sleep(0.05)
                         full_response += (response or "")
-                        message_placeholder.markdown(full_response + "▌")
+                        message_placeholder.markdown(full_response + "▌")       
                 else:
-                    full_response = "Lo siento, no se encontró ninguna respuesta."
+                    full_response = "Lo siento, no se encontraron respuestas."
                     message_placeholder.markdown(full_response)
-        
-        # Agregar la respuesta del asistente al historial del chat
         st.session_state.messages.append({"role": "assistant", "content": full_response})
-
-        # Mostrar el mensaje del usuario en el contenedor del chat
-        with st.chat_message("user"):
-            st.markdown(prompt)
-
 
 
 
