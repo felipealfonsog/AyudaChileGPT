@@ -116,7 +116,8 @@ with col2:
     st.write("Soy un agente especialista en responder preguntas sobre centros de ayuda o actualizaciones del estado de emergencia en Chile. ")
     st.write("Estoy aquí para ayudarte en lo que necesites en relación a la emergencia")
 
-st.write("Proyecto open-source: "+ "https://github.com/davila7/AyudaChileGPT")
+# st.write("Proyecto open-source: "+ "<a href="https://github.com/davila7/AyudaChileGPT" target="_blank">AyudaChileGPT en Github</a>")
+st.markdown("Proyecto Open-Source: [AyudaChileGPT en Github](https://github.com/davila7/AyudaChileGPT)")
 st.markdown('---')
 
 
