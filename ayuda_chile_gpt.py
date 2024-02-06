@@ -161,7 +161,7 @@ def page1():
     #             message_placeholder.markdown(full_response)
     #     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
-
+    # ------------
     # Algunos arreglos en el codigo en esta función - By @felipealfonsog 
 
 
