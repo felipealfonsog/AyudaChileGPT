@@ -29,7 +29,7 @@ Agente IA Open-Source para atender consultas sobre la emergencia en Chile ðŸš¨ ð
 [![LinkedIn](https://img.shields.io/badge/Compartir%20en-LinkedIn-blue?logo=linkedin&style=plastic)](https://www.linkedin.com/shareArticle?url=http://ayudachilegpt.cl/&title=AyudaChileGPT%20en%20LinkedIn&summary=AyudaChileGPT%20en%20LinkedIn)
 
 ![Main Language](https://img.shields.io/github/languages/top/davila7/AyudaChileGPT.svg?style=flat&color=blue)
-[![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/Naereen/badges/)
+[![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](#)
 
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
