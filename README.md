@@ -3,19 +3,15 @@ Agente IA Open-Source para atender consultas sobre la emergencia en Chile 🚨 �
 
 [![AyudaChileGPT Badge](https://custom-icon-badges.demolab.com/badge/AyudaChileGPT-blue.svg?logo=ayudachilegpt4&logoColor=white&style=plastic)](#)
 
-#### Websites
-
-- Website Oficial: [ayudachilegpt.cl](http://ayudachilegpt.cl/)
-
-- Enlace al agente:  [Ayuda Chile GPT en onrender.com](https://ayuda-chile-gpt.onrender.com/)
-
-- Donaciones a [Desafío Levantemos Chile](https://desafiolevantemoschile.org/) (Fundación de Apoyo a la Ciudadanía y Emergencias en Chile)
-
-- Donaciones a Fundación [Un Techo para Chile](https://cl.techo.org/)
-
+<details open>
+<summary>Websites 🚀</summary> 
+<br>
+<sub>
+Website Oficial: [ayudachilegpt.cl](http://ayudachilegpt.cl/) | Enlace al agente:  [Ayuda Chile GPT en onrender.com](https://ayuda-chile-gpt.onrender.com/) | Donaciones a [Desafío Levantemos Chile](https://desafiolevantemoschile.org/) (Fundación de Apoyo a la Ciudadanía y Emergencias en Chile) | Donaciones a Fundación [Un Techo para Chile](https://cl.techo.org/)
+</sub>
 
 <br>
-
+</details>
 <!--
 <img width="977" alt="Captura de pantalla 2024-02-04 a las 08 36 41" src="https://github.com/davila7/AyudaChileGPT/assets/6216945/16cdfa24-6cd9-41df-821a-66a34bd874ad">
 -->
