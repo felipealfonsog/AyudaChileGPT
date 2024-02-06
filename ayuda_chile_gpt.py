@@ -24,6 +24,7 @@ Felipe A. González : https://github.com/felipealfonsog
 '''
 
 import streamlit as st
+import streamlit.components.v1 as components
 import time
 import os
 from judini.codegpt.chat import Completion
@@ -210,6 +211,37 @@ def page1():
                     message_placeholder.markdown(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
+
+
+
+def page2():
+    
+    ''' 
+    
+    st.header("Centros de ayuda verificados")
+
+    # Cargar el archivo csv
+    @st.cache_data
+    def load_data():
+        return pd.read_csv('assets/centros_verificados_v4.csv')
+
+    # Cargar los datos
+    df = load_data()
+
+    # Input de texto
+    filtro = st.text_input('Filtrar información')
+
+    # Filtrar el dataframe
+    df = df[df.apply(lambda row: row.astype(str).str.lower(
+    ).str.contains(filtro.lower()), axis=1).any(axis=1)]
+
+    # Mostrar el dataframe
+    st.write(df)
+    
+    '''
+# Terminé realizando yo una implementacion diferente para desplegar un mapa de google maps con los centros de ayuda
+# funciona ok. pondre un sshot. 
+# I ended up doing an implementation by myself. it's working fine by now. By @felipealfonsog
 
 
 def page2():
