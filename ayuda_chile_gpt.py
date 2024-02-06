@@ -35,11 +35,12 @@ from semantic_router import Route
 from semantic_router.encoders import CohereEncoder
 from semantic_router.layer import RouteLayer
 import pandas as pd
-from langchain.agents import Tool, initialize_agent
+from langchain.agents import AgentType, Tool, initialize_agent
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain.chat_models import ChatOpenAI
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
+from langchain_community.callbacks import StreamlitCallbackHandler
 from helper_utils import capture_and_display_output
 from dotenv import load_dotenv
 from urllib.parse import quote
@@ -53,59 +54,64 @@ load_dotenv()
 codegpt_api_key= os.getenv("CODEGPT_API_KEY")
 # Set API base URL
 codegpt_api_base = os.getenv("CODEGPT_API_BASE")
+#set API base dev URL
+codegpt_api_base_dev = os.getenv("CODEGPT_API_BASE_DEV")
 
 # set ID de Agentes
 codegpt_acopio_agent_id= os.getenv("CODEGPT_ACOPIO_AGENT_ID")
 codegpt_fibe_agent_id= os.getenv("CODEGPT_FIBE_AGENT_ID")
 
-st.set_page_config(layout="centered")
 
+# Langchain Agents and Tools
 # create the prompt template to the tool
 execute_task_prompt = PromptTemplate(
-    template="""Given the following overall question `{input}`.
+    template="""Dada la siguiente pregunta relacionada al Incendio en la Quinta Región de Chile `{input}`.
 
-    Perform the task by understanding the problem, extracting variables, and being smart
-    and efficient. Write a detailed response that address the task.
-    When confronted with choices, make a decision yourself with reasoning.
+    Realice la tarea entendiendo el problema, extrayendo variables, siendo inteligente
+    y eficiente. Escriba una respuesta detallada que aborde la tarea.
+    Cuando se enfrente a opciones, tome una decisión usted mismo con razonamiento.
     """,
     input_variables=["input"],
 )
 
 # Create a ChatOpenAI object with the retrieved API key, API base URL, and agent ID
-# llm_acopio = ChatOpenAI(openai_api_key=codegpt_api_key,
-#                 openai_api_base=codegpt_api_base,
-#                 model=codegpt_acopio_agent_id, verbose=True)
-# llm_chain_acopio = LLMChain(llm=llm_acopio, prompt=execute_task_prompt)
+llm_acopio = ChatOpenAI(openai_api_key=codegpt_api_key,
+                openai_api_base=codegpt_api_base,
+                model=codegpt_acopio_agent_id, verbose=True)
+llm_chain_acopio = LLMChain(llm=llm_acopio, prompt=execute_task_prompt)
 
-# acopio_agent_tool = Tool(
-#     name='AGENTE_ACOPIO',
-#     func=llm_chain_acopio.run,
-#     description="Útil para cuando necesitas responder preguntas sobre Centros de Acopio"
-# ) 
+acopio_agent_tool = Tool(
+    name='Centros de Acopio',
+    func=llm_chain_acopio.run,
+    description="Útil para cuando necesitas responder preguntas sobre Centros de Acopio"
+) 
 
-# # Create a ChatOpenAI object with the retrieved API key, API base URL, and agent ID
-# llm_fibe = ChatOpenAI(openai_api_key=codegpt_api_key,
-#                 openai_api_base=codegpt_api_base,
-#                 model=codegpt_fibe_agent_id, verbose=True)
-# llm_chain_fibe = LLMChain(llm=llm_fibe, prompt=execute_task_prompt)
+# Create a ChatOpenAI object with the retrieved API key, API base URL, and agent ID
+llm_fibe = ChatOpenAI(openai_api_key=codegpt_api_key,
+                openai_api_base=codegpt_api_base,
+                model=codegpt_fibe_agent_id, verbose=True)
+llm_chain_fibe = LLMChain(llm=llm_fibe, prompt=execute_task_prompt)
 
-# acopio_agent_tool = Tool(
-#     name='AGENTE_ACOPIO',
-#     func=llm_chain_fibe.run,
-#     description="Útil para cuando necesitas responder preguntas sobre la ficha La Ficha Básica de Emergencia (FIBE)"
-# ) 
+fibe_agent_tool = Tool(
+    name='FIBE',
+    func=llm_chain_fibe.run,
+    description="Útil para cuando necesitas responder preguntas sobre la ficha La Ficha Básica de Emergencia (FIBE)"
+) 
 
-# # agregamos todos los tools al array
-# tools = [acopio_agent_tool]
+# agregamos todos los tools al array
+tools = [acopio_agent_tool, fibe_agent_tool]
 
-#memory
-# memory = ConversationBufferWindowMemory(
-#     memory_key="chat_history",
-#     k=3,
-#     return_messages=True
-# )
+# memory
+memory = ConversationBufferWindowMemory(
+    memory_key="chat_history",
+    k=3,
+    return_messages=True
+)
 
-# llm_openai = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+llm_openai = ChatOpenAI(model="gpt-4-0125-preview", temperature=0)
+
+
+st.set_page_config(layout="centered")
 
 # agrega dos columnas
 col1, col2 = st.columns([2,3])
@@ -214,35 +220,6 @@ def page1():
 
 
 
-def page2():
-    
-    ''' 
-    
-    st.header("Centros de ayuda verificados")
-
-    # Cargar el archivo csv
-    @st.cache_data
-    def load_data():
-        return pd.read_csv('assets/centros_verificados_v4.csv')
-
-    # Cargar los datos
-    df = load_data()
-
-    # Input de texto
-    filtro = st.text_input('Filtrar información')
-
-    # Filtrar el dataframe
-    df = df[df.apply(lambda row: row.astype(str).str.lower(
-    ).str.contains(filtro.lower()), axis=1).any(axis=1)]
-
-    # Mostrar el dataframe
-    st.write(df)
-    
-    '''
-# Terminé realizando yo una implementacion diferente para desplegar un mapa de google maps con los centros de ayuda
-# funciona ok. pondre un sshot. 
-# I ended up doing an implementation by myself. it's working fine by now. By @felipealfonsog
-
 
 def page2():
     
@@ -274,7 +251,67 @@ def page2():
 # I ended up doing an implementation by myself. it's working fine by now. By @felipealfonsog
 
 
+
 def page2():
+    
+    ''' 
+    
+    st.header("Centros de ayuda verificados")
+
+    # Cargar el archivo csv
+    @st.cache_data
+    def load_data():
+        return pd.read_csv('assets/centros_verificados_v4.csv')
+
+    # Cargar los datos
+    df = load_data()
+
+    # Input de texto
+    filtro = st.text_input('Filtrar información')
+
+    # Filtrar el dataframe
+    df = df[df.apply(lambda row: row.astype(str).str.lower(
+    ).str.contains(filtro.lower()), axis=1).any(axis=1)]
+
+    # Mostrar el dataframe
+    st.write(df)
+    
+    '''
+# Terminé realizando yo una implementacion diferente para desplegar un mapa de google maps con los centros de ayuda
+# funciona ok. pondre un sshot. 
+# I ended up doing an implementation by myself. it's working fine by now. By @felipealfonsog
+
+
+    
+    ''' 
+    
+    st.header("Centros de ayuda verificados")
+
+    # Cargar el archivo csv
+    @st.cache_data
+    def load_data():
+        return pd.read_csv('assets/centros_verificados_v4.csv')
+
+    # Cargar los datos
+    df = load_data()
+
+    # Input de texto
+    filtro = st.text_input('Filtrar información')
+
+    # Filtrar el dataframe
+    df = df[df.apply(lambda row: row.astype(str).str.lower(
+    ).str.contains(filtro.lower()), axis=1).any(axis=1)]
+
+    # Mostrar el dataframe
+    st.write(df)
+    
+    '''
+# Terminé realizando yo una implementacion diferente para desplegar un mapa de google maps con los centros de ayuda
+# funciona ok. pondre un sshot. 
+# I ended up doing an implementation by myself. it's working fine by now. By @felipealfonsog
+
+
+
     st.header("Centros de ayuda verificados")
 
     # Cargar el archivo csv
@@ -306,7 +343,8 @@ def page2():
         st.warning("No se encontraron centros de ayuda verificados.")
 
 
-
+        
+        
 
 def page3():
     st.title('Mapa de la Nasa con focos de incendios')
